@@ -1,0 +1,10 @@
+<div class="card mb-4 box-shadow">
+    <div class="card-header">
+        <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>
+    </div>
+    <div class="card-body">
+        <p>{{ object.description }}</p>
+        <a href="{% url 'catalog:catalog' %}" type="button"
+           class="btn btn-lg btn-block btn-primary">К каталогу</a>
+    </div>
+</div>
