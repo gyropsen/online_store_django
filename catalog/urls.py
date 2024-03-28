@@ -11,4 +11,3 @@ urlpatterns = [
     path('catalog/', catalog, name='catalog'),
     path('products/<int:pk>/', products, name="products"),
 ]
-# <int:pk>/

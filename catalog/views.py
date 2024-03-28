@@ -6,7 +6,7 @@ from catalog.models import Category
 
 def index(request):
     context = {
-        'object_list': Category.objects.all(),
+        'object_list': Product.objects.all(),
         'title': 'Главная'
     }
     return render(request, 'catalog/index.html', context)
