@@ -1,0 +1,15 @@
+{% extends 'catalog/base.html'%}
+
+{% block content %}
+<div class="card mb-4 box-shadow">
+    <div class="card-header">
+        <h4 class="my-0 font-weight-normal">{{ object.title }}</h4>
+    </div>
+    <div class="card-body">
+        <img class="card-img-top" src="{{ object.image }}" alt="Card image cap">
+        <p>{{ object.content }}</p>
+        <p>Дата создания: {{ object.created_at }}</p>
+        <p>Просмотры: {{ object.views_count }}</p>
+    </div>
+</div>
+{% endblock %}
