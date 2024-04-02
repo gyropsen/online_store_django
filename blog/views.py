@@ -2,7 +2,6 @@ from blog.models import Article
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from pytils.translit import slugify
-from django.core.mail import send_mail
 
 
 class ArticleListView(ListView):
@@ -35,16 +34,6 @@ class ArticleDetailView(DetailView):
         obj = super().get_object(queryset)
         obj.views_count += 1
         obj.save()
-        if obj.views_count % 100 == 0:
-            print(obj.views_count)
-
-            send_mail(
-                "Subject here",
-                "Here is the message.",
-                "from@example.com",
-                ["to@example.com"],
-                fail_silently=False,
-            )
         return obj
 
 
