@@ -1,0 +1,20 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="card mb-4 box-shadow">
+    <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Название: {{ object.name }}</h4>
+    </div>
+    <div class="card-body">
+        <p>Описание: {{ object.description|truncatewords:100 }}</p>
+        <p>Категория: {{ object.category }}</p>
+        <p>Цена: {{ object.price }} рублей</p>
+        <img class="card-img-top" src="{% my_media_tag object.image %}" alt="Card image cap">
+
+
+        <a href="{% url 'catalog:catalog' %}" type="button"
+           class="btn btn-lg btn-block btn-primary">Купить</a>
+    </div>
+</div>
+{% endblock %}

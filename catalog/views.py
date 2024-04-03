@@ -1,7 +1,6 @@
-from django.shortcuts import render
 from catalog.models import User, Product, Category
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, ListView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView
 
 
 class IndexTemplateView(ListView):
@@ -92,3 +91,6 @@ class ProductListView(ListView):
 #         'description': str(category_item.description),
 #     }
 #     return render(request, 'catalog/product_list.html', context)
+
+class ProductDetailView(DetailView):
+    model = Product
