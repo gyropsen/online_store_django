@@ -14,7 +14,13 @@
         {% if object.version_name %}
         <p>Название версии: {{ object.version_name }}</p>
         {% endif %}
-
+        <p>Владелец:
+            {% if object.owner %}
+            <a href="{% url 'users:profile' %}" >{{ object.owner }}</a>
+            {% else %}
+            Нет владельца
+            {% endif %}
+        </p>
         <a href="{% url 'catalog:product_detail' object.pk %}" type="button"
            class="btn btn-lg btn-block btn-primary">Просмотреть</a>
     </div>

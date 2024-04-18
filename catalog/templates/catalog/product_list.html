@@ -4,18 +4,7 @@
 
 {% block content %}
 {% for object in object_list %}
-<!--<div class="card mb-4 box-shadow">-->
-<!--    <div class="card-header">-->
-<!--        <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>-->
-<!--    </div>-->
-<!--    <div class="card-body">-->
-<!--        <img class="card-img-top" src="{% my_media_tag object.image %}" alt="Card image cap">-->
-<!--        <p>Цена: {{ object.price }}</p>-->
-<!--        <p>Описание: {{ object.description|truncatewords:100 }}</p>-->
-<!--        <a href="{% url 'catalog:product_detail' object.pk %}" type="button"-->
-<!--           class="btn btn-lg btn-block btn-primary">Просмотреть</a>-->
-<!--    </div>-->
-<!--</div>-->
+
 {% include 'catalog/includes/inc_product.html' %}
 
 {% endfor %}

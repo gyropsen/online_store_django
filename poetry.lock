@@ -104,6 +104,25 @@ files = [
 django = ">=4.2"
 
 [[package]]
+name = "django-phonenumber-field"
+version = "7.3.0"
+description = "An international phone number field for django models."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-phonenumber-field-7.3.0.tar.gz", hash = "sha256:f9cdb3de085f99c249328293a3b93d4e5fa440c0c8e3b99eb0d0f54748629797"},
+    {file = "django_phonenumber_field-7.3.0-py3-none-any.whl", hash = "sha256:bc6eaa49d1f9d870944f5280258db511e3a1ba5e2fbbed255488dceacae45d06"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+phonenumberslite = {version = ">=7.0.2", optional = true, markers = "extra == \"phonenumberslite\""}
+
+[package.extras]
+phonenumbers = ["phonenumbers (>=7.0.2)"]
+phonenumberslite = ["phonenumberslite (>=7.0.2)"]
+
+[[package]]
 name = "executing"
 version = "2.0.1"
 description = "Get the currently executing AST node of a frame, and other information"
@@ -213,6 +232,17 @@ files = [
 
 [package.dependencies]
 ptyprocess = ">=0.5"
+
+[[package]]
+name = "phonenumberslite"
+version = "8.13.34"
+description = "Python version of Google's common library for parsing, formatting, storing and validating international phone numbers."
+optional = false
+python-versions = "*"
+files = [
+    {file = "phonenumberslite-8.13.34-py2.py3-none-any.whl", hash = "sha256:3d43d824c080b24e1f9b8b828695b2372800aeafbd17327e88e55ecb64e663c9"},
+    {file = "phonenumberslite-8.13.34.tar.gz", hash = "sha256:396ae65da710b0d2309f054a937a70e28fe7ddf15b097eb6371676633c512a0e"},
+]
 
 [[package]]
 name = "pillow"
@@ -530,4 +560,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "c247cf2fe181bf706c6cc9469dde068086701f2d253744f19a8774652435c741"
+content-hash = "0c8e5a0c1ada1ac83337696c27b19d02a5a2f62523b72779992855eb9dbed5da"

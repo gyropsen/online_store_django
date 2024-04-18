@@ -3,6 +3,7 @@ from catalog.models import User, Product, Category, ProductVersion
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.forms import inlineformset_factory
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class IndexTemplateView(ListView):
@@ -125,13 +126,23 @@ class ProductDetailView(DetailView):
     extra_context = {'title': 'Детальный просмотр продукта'}
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('users:register')
+    redirect_field_name = ""
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:index')
 
+    def form_valid(self, form):
+        product = form.save()
+        product.owner = self.request.user
+        product.save()
+        return super().form_valid(form)
 
-class ProductUpdateView(UpdateView):
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('users:register')
+    redirect_field_name = ""
     model = Product
     form_class = ProductForm
     extra_context = {'title': 'Редактирование продукта'}
@@ -161,7 +172,9 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('users:register')
+    redirect_field_name = ""
     model = Product
     extra_context = {'title': 'Удаление продукта'}
 
