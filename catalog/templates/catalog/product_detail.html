@@ -12,7 +12,9 @@
         <p>Цена: {{ object.price }} рублей</p>
         <img class="card-img-top" src="{% my_media_tag object.image %}" alt="Card image cap">
         <a class="w-10 btn btn-lg btn-danger" href="{% url 'catalog:product_delete' object.pk %}">Удалить</a>
-        <a class="w-10 btn btn-lg btn-warning" href="{% url 'catalog:product_update' object.pk %}">Редактировать</a>
+        {% if perms.catalog.set_is_pub and perms.catalog.set_is_pub and perms.catalog.set_is_pub or user == object.owner%}
+            <a class="w-10 btn btn-lg btn-warning" href="{% url 'catalog:product_update' object.pk %}">Редактировать</a>
+        {% endif %}
         <a class="w-10 btn btn-lg btn-primary" href="{% url 'catalog:products' object.category.pk %}">К списку</a>
     </div>
 </div>

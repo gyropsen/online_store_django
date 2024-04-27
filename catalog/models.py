@@ -25,6 +25,7 @@ class Product(models.Model):
     price = models.FloatField(verbose_name='Цена за покупку')
     created_at = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateField(auto_now=True, verbose_name='Дата последнего изменения')
+    is_pub = models.BooleanField(default=False, verbose_name='Статус продукта')
 
     # manufactured_at = models.DateField(verbose_name='Дата производства продукта', **NULLABLE)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='владелец')
@@ -36,6 +37,12 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+        permissions = [
+            ('set_is_pub', 'Can set is_pub'),
+            ('can_edit_description', 'Can edit description'),
+            ('can_edit_category', 'Can edit category'),
+        ]
+
 
 
 class User(models.Model):

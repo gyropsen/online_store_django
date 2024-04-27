@@ -1,9 +1,10 @@
-from catalog.forms import ProductForm, ProductVersionForm
+from catalog.forms import ProductForm, ProductVersionForm, ProductModeratorForm
 from catalog.models import User, Product, Category, ProductVersion
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.forms import inlineformset_factory
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 
 class IndexTemplateView(ListView):
@@ -170,6 +171,17 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
             formset.instance = object_
             formset.save()
         return super().form_valid(form)
+
+    def get_form_class(self):
+        user = self.request.user
+        if (user.has_perm('catalog.set_is_pub') and
+                user.has_perm('catalog.can_edit_description') and
+                user.has_perm('catalog.can_edit_category')):
+            return ProductModeratorForm
+        elif user == self.object.owner:
+            return ProductForm
+        else:
+            raise PermissionDenied
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
