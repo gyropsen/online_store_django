@@ -1,44 +1,12 @@
-from catalog.forms import ProductForm, ProductVersionForm, ProductModeratorForm
-from catalog.models import User, Product, Category, ProductVersion
-from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
-from django.forms import inlineformset_factory
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
-
-from catalog.services import model_objects_all
+from catalog.models import User, Product, Category
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, CreateView, ListView, DetailView
 
 
 class IndexTemplateView(ListView):
     model = Product
     extra_context = {'title': 'Главная'}
     template_name = 'catalog/index.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context_data = super().get_context_data(object_list=None, **kwargs)
-        # Получаем все продукты
-        products = model_objects_all(Product)
-
-        # Перебор продуктов
-        for product in products:
-
-            # Получение всех версии продуктов
-            versions = ProductVersion.objects.filter(product=product)
-            if versions:
-
-                # Получение активной версии из версий
-                active_version = versions.filter(is_active=True)
-                if active_version:
-
-                    # Присваивание версии
-                    product.version_num = active_version[0].version
-                    product.version_name = active_version[0].name_version
-                else:
-                    product.version = None
-            else:
-                product.version = None
-        context_data['object_list'] = products
-        return context_data
 
 
 # def index(request):
@@ -87,9 +55,6 @@ class CatalogListView(ListView):
     model = Category
     extra_context = {'title': 'Каталог'}
 
-    def get_queryset(self):
-        return model_objects_all(Category)
-
 
 # def catalog(request):
 #     context = {
@@ -129,71 +94,3 @@ class ProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
-    extra_context = {'title': 'Детальный просмотр продукта'}
-
-
-class ProductCreateView(LoginRequiredMixin, CreateView):
-    login_url = reverse_lazy('users:register')
-    redirect_field_name = ""
-    model = Product
-    form_class = ProductForm
-    success_url = reverse_lazy('catalog:index')
-
-    def form_valid(self, form):
-        product = form.save()
-        product.owner = self.request.user
-        product.save()
-        return super().form_valid(form)
-
-
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
-    login_url = reverse_lazy('users:register')
-    redirect_field_name = ""
-    model = Product
-    form_class = ProductForm
-    extra_context = {'title': 'Редактирование продукта'}
-
-    def get_success_url(self):
-        return reverse('catalog:product_detail', args=[self.kwargs.get('pk')])
-
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        ProductVersionFormset = inlineformset_factory(Product, ProductVersion, form=ProductVersionForm, extra=1)
-        if self.request.method == 'POST':
-            formset = ProductVersionFormset(self.request.POST, instance=self.object)
-        else:
-            formset = ProductVersionFormset(instance=self.object)
-
-        context_data['formset'] = formset
-        return context_data
-
-    def form_valid(self, form):
-        context_data = self.get_context_data()
-        formset = context_data['formset']
-        object_ = form.save()
-
-        if formset.is_valid():
-            formset.instance = object_
-            formset.save()
-        return super().form_valid(form)
-
-    def get_form_class(self):
-        user = self.request.user
-        if (user.has_perm('catalog.set_is_pub') and
-                user.has_perm('catalog.can_edit_description') and
-                user.has_perm('catalog.can_edit_category')):
-            return ProductModeratorForm
-        elif user == self.object.owner:
-            return ProductForm
-        else:
-            raise PermissionDenied
-
-
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
-    login_url = reverse_lazy('users:register')
-    redirect_field_name = ""
-    model = Product
-    extra_context = {'title': 'Удаление продукта'}
-
-    def get_success_url(self):
-        return reverse('catalog:products', args=[Product.objects.get(pk=self.kwargs.get('pk')).category.pk])

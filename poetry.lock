@@ -44,21 +44,6 @@ files = [
 ]
 
 [[package]]
-name = "crispy-bootstrap4"
-version = "2024.1"
-description = "Bootstrap4 template pack for django-crispy-forms"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "crispy-bootstrap4-2024.1.tar.gz", hash = "sha256:208673bf6a25892a656971af7a00e18ba2f7f06cd4a0d667923bd6134e64d276"},
-    {file = "crispy_bootstrap4-2024.1-py3-none-any.whl", hash = "sha256:46cf98777a28621d240bf71eb36d4a26ff86e9e19be1cfd822645f4043d18c31"},
-]
-
-[package.dependencies]
-django = ">=4.2"
-django-crispy-forms = ">=2.0"
-
-[[package]]
 name = "decorator"
 version = "5.1.1"
 description = "Decorators for Humans"
@@ -88,39 +73,6 @@ tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 [package.extras]
 argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
-
-[[package]]
-name = "django-crispy-forms"
-version = "2.1"
-description = "Best way to have Django DRY forms"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "django-crispy-forms-2.1.tar.gz", hash = "sha256:4d7ec431933ad4d4b5c5a6de4a584d24613c347db9ac168723c9aaf63af4bb96"},
-    {file = "django_crispy_forms-2.1-py3-none-any.whl", hash = "sha256:d592044771412ae1bd539cc377203aa61d4eebe77fcbc07fbc8f12d3746d4f6b"},
-]
-
-[package.dependencies]
-django = ">=4.2"
-
-[[package]]
-name = "django-phonenumber-field"
-version = "7.3.0"
-description = "An international phone number field for django models."
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "django-phonenumber-field-7.3.0.tar.gz", hash = "sha256:f9cdb3de085f99c249328293a3b93d4e5fa440c0c8e3b99eb0d0f54748629797"},
-    {file = "django_phonenumber_field-7.3.0-py3-none-any.whl", hash = "sha256:bc6eaa49d1f9d870944f5280258db511e3a1ba5e2fbbed255488dceacae45d06"},
-]
-
-[package.dependencies]
-Django = ">=3.2"
-phonenumberslite = {version = ">=7.0.2", optional = true, markers = "extra == \"phonenumberslite\""}
-
-[package.extras]
-phonenumbers = ["phonenumbers (>=7.0.2)"]
-phonenumberslite = ["phonenumberslite (>=7.0.2)"]
 
 [[package]]
 name = "executing"
@@ -232,17 +184,6 @@ files = [
 
 [package.dependencies]
 ptyprocess = ">=0.5"
-
-[[package]]
-name = "phonenumberslite"
-version = "8.13.34"
-description = "Python version of Google's common library for parsing, formatting, storing and validating international phone numbers."
-optional = false
-python-versions = "*"
-files = [
-    {file = "phonenumberslite-8.13.34-py2.py3-none-any.whl", hash = "sha256:3d43d824c080b24e1f9b8b828695b2372800aeafbd17327e88e55ecb64e663c9"},
-    {file = "phonenumberslite-8.13.34.tar.gz", hash = "sha256:396ae65da710b0d2309f054a937a70e28fe7ddf15b097eb6371676633c512a0e"},
-]
 
 [[package]]
 name = "pillow"
@@ -465,20 +406,6 @@ plugins = ["importlib-metadata"]
 windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
-name = "python-dotenv"
-version = "1.0.1"
-description = "Read key-value pairs from a .env file and set them as environment variables"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "python-dotenv-1.0.1.tar.gz", hash = "sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca"},
-    {file = "python_dotenv-1.0.1-py3-none-any.whl", hash = "sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a"},
-]
-
-[package.extras]
-cli = ["click (>=5.0)"]
-
-[[package]]
 name = "pytils"
 version = "0.4.1"
 description = "Russian-specific string utils"
@@ -487,21 +414,6 @@ python-versions = "^3.7"
 files = [
     {file = "pytils-0.4.1.tar.gz", hash = "sha256:aa109b1bc0ec4bdb7c9768520110348d8aeb0706600e6cf641272e6850e26eab"},
 ]
-
-[[package]]
-name = "redis"
-version = "5.0.4"
-description = "Python client for Redis database and key-value store"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "redis-5.0.4-py3-none-any.whl", hash = "sha256:7adc2835c7a9b5033b7ad8f8918d09b7344188228809c98df07af226d39dec91"},
-    {file = "redis-5.0.4.tar.gz", hash = "sha256:ec31f2ed9675cc54c21ba854cfe0462e6faf1d83c8ce5944709db8a4700b9c61"},
-]
-
-[package.extras]
-hiredis = ["hiredis (>=1.0.0)"]
-ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"]
 
 [[package]]
 name = "six"
@@ -589,4 +501,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "4dd506cae56713171429264b841881e6f3f9b1cd9803d045be18903532dca831"
+content-hash = "9a4c05a5cbfb72f6e1ffa521ce7e61085f3b2149318ae30bda3943ef35cee0ee"
