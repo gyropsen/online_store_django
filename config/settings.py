@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-i78*1^d+kb41&p0v#a+uuy0qmnb-hy3dmzuvq%mrm=eo1_eev8'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', False) == "True"
 
 ALLOWED_HOSTS = []
 
@@ -85,10 +88,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'online_store_django',  # Название БД
-        'USER': 'postgres',  # Пользователь для подключения
-        'PASSWORD': '12345',  # Пароль для этого пользователя
-        'HOST': '127.0.0.1',  # Адрес, на котором развернут сервер БД
-        'PORT': 5432,  # Порт, на котором работает сервер БД
+        'USER': os.getenv('USER_NAME'),  # Пользователь для подключения
+        'PASSWORD': os.getenv('PASSWORD'),  # Пароль для этого пользователя
+        'HOST': os.getenv('HOST'),  # Адрес, на котором развернут сервер БД
+        'PORT': os.getenv('PORT'),  # Порт, на котором работает сервер БД
     }
 }
 
@@ -144,14 +147,13 @@ LOGIN_REDIRECT_URL = '/'
 
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 2525
-EMAIL_HOST_USER = 'dsalv00@mail.ru'
-EMAIL_HOST_PASSWORD = 'SicgyqJNU4daJWZbCLEB'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = False
 EMAIL_USE_TLS = True
 
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
 
 CACHE_ENABLED = True
 
@@ -159,6 +161,6 @@ if CACHE_ENABLED:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379",
+            "LOCATION": os.getenv('LOCATION'),
         }
     }
