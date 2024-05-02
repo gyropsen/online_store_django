@@ -44,7 +44,6 @@ class Product(models.Model):
         ]
 
 
-
 class User(models.Model):
     name = models.CharField(max_length=50, verbose_name='Имя')
     phone = models.TextField(**NULLABLE)

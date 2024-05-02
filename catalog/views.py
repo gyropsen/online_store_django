@@ -6,6 +6,8 @@ from django.forms import inlineformset_factory
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 
+from catalog.services import model_objects_all
+
 
 class IndexTemplateView(ListView):
     model = Product
@@ -15,7 +17,7 @@ class IndexTemplateView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(object_list=None, **kwargs)
         # Получаем все продукты
-        products = Product.objects.all()
+        products = model_objects_all(Product)
 
         # Перебор продуктов
         for product in products:
@@ -84,6 +86,9 @@ class WriteMessageCreateView(CreateView):
 class CatalogListView(ListView):
     model = Category
     extra_context = {'title': 'Каталог'}
+
+    def get_queryset(self):
+        return model_objects_all(Category)
 
 
 # def catalog(request):
