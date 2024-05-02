@@ -1,5 +1,7 @@
 from django.db import models
 
+from config import settings
+
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -23,8 +25,10 @@ class Product(models.Model):
     price = models.FloatField(verbose_name='Цена за покупку')
     created_at = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateField(auto_now=True, verbose_name='Дата последнего изменения')
+    is_pub = models.BooleanField(default=False, verbose_name='Статус продукта')
 
     # manufactured_at = models.DateField(verbose_name='Дата производства продукта', **NULLABLE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='владелец')
 
     def __str__(self):
         return (f"{self.name} {self.description} {self.image} {self.category} "
@@ -33,6 +37,11 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+        permissions = [
+            ('set_is_pub', 'Can set is_pub'),
+            ('can_edit_description', 'Can edit description'),
+            ('can_edit_category', 'Can edit category'),
+        ]
 
 
 class User(models.Model):
@@ -46,3 +55,17 @@ class User(models.Model):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+
+class ProductVersion(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
+    version = models.PositiveIntegerField(verbose_name='Версия продукта')
+    name_version = models.CharField(max_length=128, verbose_name='Название версии')
+    is_active = models.BooleanField(default=False, verbose_name='Признак текущей версии')
+
+    def __str__(self):
+        return f"{self.product} ({self.version})"
+
+    class Meta:
+        verbose_name = 'Версия'
+        verbose_name_plural = 'Версии'

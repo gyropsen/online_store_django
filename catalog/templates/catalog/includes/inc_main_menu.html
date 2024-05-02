@@ -1,10 +1,20 @@
-
-
 <h5 class="my-0 mr-md-auto font-weight-normal">Магазин электроники Electroplus</h5>
 <nav class="my-2 my-md-0 mr-md-3">
     <a class="p-2 text-dark" href="{% url 'catalog:index' %}">Главная</a>
     <a class="p-2 text-dark" href="{% url 'catalog:catalog' %}">Каталог</a>
     <a class="p-2 text-dark" href="{% url 'catalog:contacts' %}">Контакты</a>
     <a class="p-2 text-dark" href="{% url 'blog:list' %}">Блог</a>
+    {% if user.is_authenticated %}
+    <a class="p-2 text-dark" href="{% url 'users:profile' %}">Профиль</a>
+    <a class="p-2" type="submit">
+        <form method="post" action="{% url 'users:logout' %}">
+            {% csrf_token %}
+            <button class="btn btn-outline-primary" type="submit">Выход</button>
+        </form>
+    </a>
+    {% else %}
+    <a href="{% url 'users:login' %}" class="p-2 text-dark">Вход</a>
+    <a href="{% url 'users:register' %}" class="p-2 text-dark">Регистрация</a>
+    {% endif %}
 </nav>
 <a class="btn btn-outline-primary" href="{% url 'catalog:write_message' %}">Напишите нам</a>
